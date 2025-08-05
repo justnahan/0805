@@ -4,11 +4,11 @@ import { ProductCard } from '@/components/ProductCard'
 import { supabase, Product } from '@/lib/supabase'
 
 export const metadata: Metadata = {
-  title: '氛圍 - 今天，想靠近哪一種感覺？',
+  title: '暮色 Dusk - 今天，想靠近哪一種感覺？',
   description: '為現代都市情侶與女性量身打造的親密選物空間。不說性，但讓人感受到親密的邀請。溫柔、詩意、不造成心理負擔的親密體驗。',
   keywords: '親密關係, 情侶用品, 女性友善, 溫柔選物',
   openGraph: {
-    title: '氛圍 - 今天，想靠近哪一種感覺？',
+    title: '暮色 Dusk - 今天，想靠近哪一種感覺？',
     description: '為現代都市情侶與女性量身打造的親密選物空間',
     type: 'website',
   }
@@ -203,49 +203,77 @@ export default async function Home() {
       </section>
 
       {/* 關於我們區 */}
-      <section id="about" className="py-20 px-4 bg-[var(--soft-beige)]">
-        <div className="max-w-4xl mx-auto text-center">
+      <section id="about" className="py-20 px-4 relative overflow-hidden">
+        {/* 背景裝飾與漸層 */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--warm-white)] via-[var(--soft-beige)] to-[var(--light-purple-gray)]/30"></div>
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-10 right-20 w-24 h-24 bg-gradient-to-br from-[var(--sunset-pink)]/15 to-transparent rounded-full blur-xl animate-atmosphere-pulse"></div>
+          <div className="absolute bottom-10 left-20 w-32 h-32 bg-gradient-to-br from-[var(--dusk-blue)]/10 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute top-1/3 left-1/3 w-20 h-20 bg-gradient-to-br from-[var(--gold-copper)]/8 to-transparent rounded-full blur-xl"></div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <h2 className="text-3xl md:text-4xl font-light-custom text-[var(--deep-brown-gray)] mb-8">
-            關於氛圍
+            關於暮色
           </h2>
           
           <div className="space-y-8 text-lg text-[var(--warm-gray)] leading-relaxed-custom">
-            <p>
-              我們相信親密關係中的需求不需要被過度包裝，也無需刻意隱藏，
-              而是以一種自然、優雅、不造成心理負擔的方式呈現。
+            <p className="animate-atmosphere-slide-up" style={{animationDelay: '0.2s'}}>
+              當夜色漸濃，城市的喧囂慢慢沉澱，<br />
+              那些無法在白日裡說出口的渴望，開始悄悄甦醒。
             </p>
             
-            <p>
-              為 25-40歲都市女性與穩定關係中的情侶，
-              創造一個溫柔、詩意、具有藝術感的選物空間。
+            <p className="animate-atmosphere-slide-up" style={{animationDelay: '0.4s'}}>
+              我們相信，親密不需要被過度包裝或刻意隱藏，<br />
+              而是以一種自然、優雅、毫無心理負擔的方式，<br />
+              <span className="text-[var(--deep-brown-gray)] font-medium-custom">輕柔地融入生活的每個角落。</span>
             </p>
             
-            <p className="font-medium-custom text-[var(--deep-brown-gray)]">
-              「輕輕放進生活裡」
+            <p className="animate-atmosphere-slide-up" style={{animationDelay: '0.6s'}}>
+              為都市中那些懂得品味生活的女性，<br />
+              和珍惜彼此的情侶們，<br />
+              我們創造了這個溫柔、詩意、充滿美感的選物空間。
             </p>
+            
+            <div className="mt-12 p-8 bg-gradient-to-r from-[var(--warm-white)]/80 via-[var(--light-pink-brown)]/20 to-[var(--warm-white)]/80 rounded-2xl border border-[var(--light-pink-brown)]/30 animate-atmosphere-slide-up" style={{animationDelay: '0.8s'}}>
+              <p className="text-xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">
+                「在暮色中，找到屬於自己的溫柔」
+              </p>
+              <p className="text-base text-[var(--warm-gray)]">
+                不慌張、不羞澀，只是很自然地，讓美好輕輕放進生活裡。
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-4 border-t border-[var(--light-pink-brown)]/20">
-        <div className="max-w-6xl mx-auto">
+      <footer className="py-16 px-4 relative overflow-hidden">
+        {/* 背景漸層協調 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[var(--light-purple-gray)]/40 via-[var(--soft-beige)]/60 to-[var(--warm-white)]"></div>
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--light-pink-brown)]/30 to-transparent"></div>
+          <div className="absolute top-10 right-10 w-28 h-28 bg-gradient-to-br from-[var(--misty-lavender)]/20 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute bottom-10 left-10 w-20 h-20 bg-gradient-to-br from-[var(--copper-glow)]/15 to-transparent rounded-full blur-xl"></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
-            <div>
+            <div className="animate-atmosphere-slide-up" style={{animationDelay: '0.1s'}}>
               <h3 className="text-xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">品牌理念</h3>
               <p className="text-[var(--warm-gray)] leading-relaxed-custom">
                 溫柔、詩意、不造成心理負擔的親密體驗
               </p>
             </div>
             
-            <div>
+            <div className="animate-atmosphere-slide-up" style={{animationDelay: '0.2s'}}>
               <h3 className="text-xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">隱私保護</h3>
               <p className="text-[var(--warm-gray)] leading-relaxed-custom">
                 包裝不會讓人臉紅心跳，但內容可能會
               </p>
             </div>
             
-            <div>
+            <div className="animate-atmosphere-slide-up" style={{animationDelay: '0.3s'}}>
               <h3 className="text-xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">貼心服務</h3>
               <p className="text-[var(--warm-gray)] leading-relaxed-custom">
                 專業與理解，是我們與您溝通的方式
@@ -253,9 +281,9 @@ export default async function Home() {
             </div>
           </div>
           
-          <div className="mt-12 pt-8 border-t border-[var(--light-pink-brown)]/20 text-center">
+          <div className="mt-12 pt-8 border-t border-[var(--light-pink-brown)]/30 text-center animate-atmosphere-slide-up" style={{animationDelay: '0.4s'}}>
             <p className="text-[var(--warm-gray)] font-light-custom">
-              © 2024 氛圍 - 輕輕放進生活裡
+              © 2024 暮色 Dusk - 在暮色中，找到屬於自己的溫柔
             </p>
           </div>
         </div>

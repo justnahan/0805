@@ -12,7 +12,7 @@ export function Navigation() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link href="/" className="text-xl font-medium-custom text-[var(--deep-brown-gray)] tracking-wide-custom">
-            氛圍
+            暮色 Dusk
           </Link>
 
           {/* Desktop Navigation */}
