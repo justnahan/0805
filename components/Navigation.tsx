@@ -24,19 +24,19 @@ export function Navigation() {
               首頁
             </Link>
             <Link 
-              href="#selection" 
+              href="/products" 
               className="text-[var(--deep-brown-gray)] hover:text-[var(--rose-gold)] transition-colors duration-300 font-light-custom"
             >
               選物
             </Link>
             <Link 
-              href="#atmosphere" 
+              href="/journal" 
               className="text-[var(--deep-brown-gray)] hover:text-[var(--rose-gold)] transition-colors duration-300 font-light-custom"
             >
-              氛圍
+              氛圍日誌
             </Link>
             <Link 
-              href="#about" 
+              href="/about" 
               className="text-[var(--deep-brown-gray)] hover:text-[var(--rose-gold)] transition-colors duration-300 font-light-custom"
             >
               關於我們
@@ -73,21 +73,21 @@ export function Navigation() {
                 首頁
               </Link>
               <Link 
-                href="#selection" 
+                href="/products" 
                 className="block px-3 py-2 text-[var(--deep-brown-gray)] hover:text-[var(--rose-gold)] transition-colors duration-300 font-light-custom"
                 onClick={() => setIsMenuOpen(false)}
               >
                 選物
               </Link>
               <Link 
-                href="#atmosphere" 
+                href="/journal" 
                 className="block px-3 py-2 text-[var(--deep-brown-gray)] hover:text-[var(--rose-gold)] transition-colors duration-300 font-light-custom"
                 onClick={() => setIsMenuOpen(false)}
               >
-                氛圍
+                氛圍日誌
               </Link>
               <Link 
-                href="#about" 
+                href="/about" 
                 className="block px-3 py-2 text-[var(--deep-brown-gray)] hover:text-[var(--rose-gold)] transition-colors duration-300 font-light-custom"
                 onClick={() => setIsMenuOpen(false)}
               >
