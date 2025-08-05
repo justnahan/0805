@@ -125,21 +125,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  /* 氛圍色彩方案 */
+  /* 氛圍色彩方案 - 基礎色彩 */
   --warm-white: #FEFEFE;
   --soft-beige: #F5F1EB;
   --light-pink-brown: #E8D5C4;
   --deep-brown-gray: #4A4440;
   --rose-gold: #D4AF8C;
   --warm-gray: #8B7F7A;
+  
+  /* 視覺豐富化色彩 */
+  --warm-orange: #F4A261;
+  --deep-rose: #C97C5D;
+  --light-purple-gray: #E6D7E3;
+  --gold-copper: #B7956A;
+  --dusk-blue: #8B9DC3;
+  --sunset-pink: #E6A4B4;
+  --misty-lavender: #D4C7D8;
+  --copper-glow: #C5956F;
 }
 
 /* 氛圍網站專用元件樣式 */
 @layer components {
   .atmosphere-hero {
-    background: linear-gradient(135deg, var(--warm-white) 0%, var(--soft-beige) 100%);
+    background: linear-gradient(135deg, var(--warm-white) 0%, var(--soft-beige) 30%, var(--light-purple-gray) 100%);
     min-height: 100vh;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .atmosphere-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 70%, rgba(244, 162, 97, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(139, 157, 195, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(230, 164, 180, 0.05) 0%, transparent 50%);
+    animation: atmosphereFloat 20s ease-in-out infinite;
+    pointer-events: none;
   }
   
   .atmosphere-card {
@@ -157,22 +183,39 @@
   }
   
   .atmosphere-btn {
-    background: var(--rose-gold);
+    background: linear-gradient(135deg, var(--warm-orange) 0%, var(--deep-rose) 100%);
     color: var(--warm-white);
     padding: 0.875rem 2rem;
     border-radius: 12px;
     font-weight: 500;
     font-size: 0.95rem;
     letter-spacing: 0.5px;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .atmosphere-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+  }
+  
+  .atmosphere-btn:hover::before {
+    left: 100%;
   }
   
   .atmosphere-btn:hover {
-    background: #C99B73;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(212, 175, 140, 0.3);
+    background: linear-gradient(135deg, var(--deep-rose) 0%, var(--copper-glow) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(244, 162, 97, 0.4);
   }
   
   .atmosphere-btn-secondary {
@@ -280,4 +323,32 @@
 
 .animate-atmosphere-fade-in {
   animation: atmosphereFadeIn 1.2s ease-out forwards;
+}
+
+/* 新增的視覺效果動畫 */
+@keyframes atmosphereFloat {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  33% {
+    transform: translate(30px, -30px) rotate(1deg);
+  }
+  66% {
+    transform: translate(-20px, 20px) rotate(-1deg);
+  }
+}
+
+@keyframes atmospherePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+.animate-atmosphere-pulse {
+  animation: atmospherePulse 3s ease-in-out infinite;
 }

@@ -102,13 +102,37 @@ export default async function Home() {
               const product = products.find(p => p.id === productId)
               if (!product) return null
 
+              // 為不同卡片定義不同的視覺風格
+              const cardStyles = productId === 'PROD_UF002' 
+                ? {
+                    background: 'linear-gradient(135deg, var(--warm-white) 0%, var(--sunset-pink) 15%, var(--warm-white) 100%)',
+                    iconGradient: 'from-[var(--warm-orange)] to-[var(--deep-rose)]',
+                    glowColor: 'rgba(244, 162, 97, 0.15)'
+                  }
+                : {
+                    background: 'linear-gradient(135deg, var(--warm-white) 0%, var(--misty-lavender) 15%, var(--warm-white) 100%)',
+                    iconGradient: 'from-[var(--dusk-blue)] to-[var(--gold-copper)]',
+                    glowColor: 'rgba(139, 157, 195, 0.15)'
+                  }
+
               return (
                 <div 
                   key={productId}
-                  className="atmosphere-card text-center animate-atmosphere-slide-up"
-                  style={{animationDelay: `${index * 0.2}s`}}
+                  className="relative text-center animate-atmosphere-slide-up rounded-2xl p-8 border border-[var(--light-pink-brown)]/20 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl group"
+                  style={{
+                    animationDelay: `${index * 0.2}s`,
+                    background: cardStyles.background
+                  }}
                 >
-                  <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-[var(--rose-gold)] to-[var(--light-pink-brown)] flex items-center justify-center">
+                  {/* 懸停光暈效果 */}
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      background: `radial-gradient(circle at center, ${cardStyles.glowColor} 0%, transparent 70%)`
+                    }}
+                  ></div>
+                  
+                  <div className={`w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br ${cardStyles.iconGradient} flex items-center justify-center animate-atmosphere-pulse relative z-10 shadow-lg`}>
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       {productId === 'PROD_UF002' ? (
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -118,16 +142,16 @@ export default async function Home() {
                     </svg>
                   </div>
                   
-                  <h3 className="text-2xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">
+                  <h3 className="text-2xl font-medium-custom text-[var(--deep-brown-gray)] mb-4 relative z-10">
                     {config.atmosphereDescription}
                   </h3>
                   
-                  <p className="text-[var(--warm-gray)] leading-relaxed-custom mb-6">
+                  <p className="text-[var(--warm-gray)] leading-relaxed-custom mb-6 relative z-10">
                     {config.description}
                   </p>
                   
-                  <p className="text-sm text-[var(--deep-brown-gray)] font-medium-custom">
-                    對應選物：{config.poeticName}
+                  <p className="text-sm text-[var(--deep-brown-gray)] font-medium-custom relative z-10">
+                    對應選物：<span className="text-[var(--copper-glow)]">{config.poeticName}</span>
                   </p>
                 </div>
               )
@@ -137,8 +161,15 @@ export default async function Home() {
       </section>
 
       {/* 商品展示區 */}
-      <section id="selection" className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
+      <section id="selection" className="py-20 px-4 relative overflow-hidden">
+        {/* 背景裝飾 */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-[var(--sunset-pink)]/10 to-transparent rounded-full blur-xl"></div>
+          <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-[var(--dusk-blue)]/8 to-transparent rounded-full blur-2xl"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-[var(--misty-lavender)]/5 to-transparent rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-light-custom text-[var(--deep-brown-gray)] mb-6">
               給那些無法說明的感受
