@@ -1,103 +1,234 @@
-import Image from "next/image";
+import { Metadata } from 'next'
+import { Navigation } from '@/components/Navigation'
+import { ProductCard } from '@/components/ProductCard'
+import { supabase, Product } from '@/lib/supabase'
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: '氛圍 - 今天，想靠近哪一種感覺？',
+  description: '為現代都市情侶與女性量身打造的親密選物空間。不說性，但讓人感受到親密的邀請。溫柔、詩意、不造成心理負擔的親密體驗。',
+  keywords: '親密關係, 情侶用品, 女性友善, 溫柔選物',
+  openGraph: {
+    title: '氛圍 - 今天，想靠近哪一種感覺？',
+    description: '為現代都市情侶與女性量身打造的親密選物空間',
+    type: 'website',
+  }
+}
+
+// 商品映射配置
+const productConfig = {
+  'PROD_UF002': {
+    poeticName: '久一點的夜',
+    description: '有些時刻，不該太快結束',
+    atmosphereDescription: '留得住的時間'
+  },
+  'PROD_UF001': {
+    poeticName: '安靜的靠近',
+    description: '每一分觸碰都值得被等候',
+    atmosphereDescription: '靠近不突兀'
+  }
+}
+
+async function getProducts(): Promise<Product[]> {
+  if (!supabase) {
+    console.warn('Supabase not available, returning empty array')
+    return []
+  }
+
+  const { data: products } = await supabase
+    .from('products')
+    .select('*, merchant:merchants(*)')
+    .in('id', ['PROD_UF002', 'PROD_UF001'])
+
+  return products || []
+}
+
+export default async function Home() {
+  const products = await getProducts()
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen">
+      <Navigation />
+      
+      {/* Hero Section */}
+      <section className="atmosphere-hero flex items-center justify-center px-4 py-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="animate-atmosphere-fade-in">
+            <h1 className="text-4xl md:text-6xl font-light-custom text-[var(--deep-brown-gray)] mb-8 leading-tight">
+              今天，想靠近哪一種感覺？
+            </h1>
+            
+            <div className="space-y-6 text-lg md:text-xl text-[var(--warm-gray)] leading-relaxed-custom max-w-2xl mx-auto mb-12">
+              <p className="animate-atmosphere-slide-up" style={{animationDelay: '0.3s'}}>
+                有時候，靠近是無聲的對話<br />
+                有時候，溫柔是一種節奏感
+              </p>
+              
+              <p className="animate-atmosphere-slide-up" style={{animationDelay: '0.6s'}}>
+                今晚，想讓時間久一點？<br />
+                還是，讓觸感再輕一些？
+              </p>
+              
+              <p className="animate-atmosphere-slide-up" style={{animationDelay: '0.9s'}}>
+                我們為這些時刻，準備了一些選物<br />
+                <span className="font-medium-custom text-[var(--deep-brown-gray)]">無需說明，一看就懂的那種。</span>
+              </p>
+            </div>
+            
+            <a 
+              href="#atmosphere"
+              className="atmosphere-btn text-lg px-8 py-4 animate-atmosphere-slide-up inline-block" 
+              style={{animationDelay: '1.2s'}}
+            >
+              探索那一種感覺
+            </a>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* 情境導覽區 */}
+      <section id="atmosphere" className="py-20 px-4 bg-[var(--soft-beige)]">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-light-custom text-[var(--deep-brown-gray)] mb-6">
+              選一種氛圍，不用說出口
+            </h2>
+            <p className="text-lg text-[var(--warm-gray)] leading-relaxed-custom">
+              每一種感受，都值得被溫柔對待
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {Object.entries(productConfig).map(([productId, config], index) => {
+              const product = products.find(p => p.id === productId)
+              if (!product) return null
+
+              return (
+                <div 
+                  key={productId}
+                  className="atmosphere-card text-center animate-atmosphere-slide-up"
+                  style={{animationDelay: `${index * 0.2}s`}}
+                >
+                  <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-gradient-to-br from-[var(--rose-gold)] to-[var(--light-pink-brown)] flex items-center justify-center">
+                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      {productId === 'PROD_UF002' ? (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                      ) : (
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      )}
+                    </svg>
+                  </div>
+                  
+                  <h3 className="text-2xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">
+                    {config.atmosphereDescription}
+                  </h3>
+                  
+                  <p className="text-[var(--warm-gray)] leading-relaxed-custom mb-6">
+                    {config.description}
+                  </p>
+                  
+                  <p className="text-sm text-[var(--deep-brown-gray)] font-medium-custom">
+                    對應選物：{config.poeticName}
+                  </p>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 商品展示區 */}
+      <section id="selection" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-light-custom text-[var(--deep-brown-gray)] mb-6">
+              給那些無法說明的感受
+            </h2>
+            <p className="text-lg text-[var(--warm-gray)] leading-relaxed-custom max-w-2xl mx-auto">
+              這不是你第一次看這類東西，但也許，這是你第一次不感到緊張。
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {products.map((product, index) => {
+              const config = productConfig[product.id as keyof typeof productConfig]
+              if (!config) return null
+
+              return (
+                <div 
+                  key={product.id}
+                  className="animate-atmosphere-slide-up"
+                  style={{animationDelay: `${index * 0.3}s`}}
+                >
+                  <ProductCard
+                    product={product}
+                    poeticName={config.poeticName}
+                    description={config.description}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 關於我們區 */}
+      <section id="about" className="py-20 px-4 bg-[var(--soft-beige)]">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-light-custom text-[var(--deep-brown-gray)] mb-8">
+            關於氛圍
+          </h2>
+          
+          <div className="space-y-8 text-lg text-[var(--warm-gray)] leading-relaxed-custom">
+            <p>
+              我們相信親密關係中的需求不需要被過度包裝，也無需刻意隱藏，
+              而是以一種自然、優雅、不造成心理負擔的方式呈現。
+            </p>
+            
+            <p>
+              為 25-40歲都市女性與穩定關係中的情侶，
+              創造一個溫柔、詩意、具有藝術感的選物空間。
+            </p>
+            
+            <p className="font-medium-custom text-[var(--deep-brown-gray)]">
+              「輕輕放進生活裡」
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 border-t border-[var(--light-pink-brown)]/20">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 text-center md:text-left">
+            <div>
+              <h3 className="text-xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">品牌理念</h3>
+              <p className="text-[var(--warm-gray)] leading-relaxed-custom">
+                溫柔、詩意、不造成心理負擔的親密體驗
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">隱私保護</h3>
+              <p className="text-[var(--warm-gray)] leading-relaxed-custom">
+                包裝不會讓人臉紅心跳，但內容可能會
+              </p>
+            </div>
+            
+            <div>
+              <h3 className="text-xl font-medium-custom text-[var(--deep-brown-gray)] mb-4">貼心服務</h3>
+              <p className="text-[var(--warm-gray)] leading-relaxed-custom">
+                專業與理解，是我們與您溝通的方式
+              </p>
+            </div>
+          </div>
+          
+          <div className="mt-12 pt-8 border-t border-[var(--light-pink-brown)]/20 text-center">
+            <p className="text-[var(--warm-gray)] font-light-custom">
+              © 2024 氛圍 - 輕輕放進生活裡
+            </p>
+          </div>
+        </div>
       </footer>
     </div>
-  );
+  )
 }
